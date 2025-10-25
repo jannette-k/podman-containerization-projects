@@ -1,0 +1,27 @@
+version: "3.8"
+
+services:
+  web:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_ENV=${FLASK_ENV}
+      - MONGO_URI=${MONGO_URI}
+    depends_on:
+      - db
+    networks:
+      - todo-net
+
+  db:
+    image: mongo:7
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - todo-net
+
+volumes:
+  mongo-data:
+
+networks:
+  todo-net:
